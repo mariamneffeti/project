@@ -22,11 +22,11 @@ print("=" * 60)
 # ─────────────────────────────────────────────
 # 1. DROP USELESS COLUMNS
 # ─────────────────────────────────────────────
-# User_ID   → pure identifier, no predictive value
+# User_ID   → keep for submission (needed in predict())
 # Employer_ID → 94.3% missing — keep as binary flag then drop original
 df["Has_Employer_ID"] = df["Employer_ID"].notna().astype(int)
-df.drop(columns=["User_ID", "Employer_ID"], inplace=True)
-print("✅ [Step 1] Dropped 'User_ID', converted 'Employer_ID' → 'Has_Employer_ID' flag")
+df.drop(columns=["Employer_ID"], inplace=True)
+print("✅ [Step 1] Kept 'User_ID', converted 'Employer_ID' → 'Has_Employer_ID' flag")
 
 
 # ─────────────────────────────────────────────
