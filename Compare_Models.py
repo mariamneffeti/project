@@ -216,7 +216,23 @@ y_pred_best = best_model.predict(X_test)
 print(classification_report(y_test, y_pred_best,
       target_names=["Not Cancelled", "Cancelled"]))
 
-print("\n✅ All done! Check the generated PNG files for visual comparisons.")
+f1_macro = f1_score(y_test, y_pred_best, average="macro")
+print(f"🎯 F1 Macro Score ({best_model_name}): {f1_macro:.4f}")
+
+# ─────────────────────────────────────────────
+# 9. SAVE BEST MODEL TO model.pkl
+# ─────────────────────────────────────────────
+import joblib
+
+# Train the best model on the FULL dataset for maximum performance
+best_model_final = models[best_model_name]
+best_model_final.fit(X, y)
+
+joblib.dump(best_model_final, "model.pkl")
+print(f"\n✅ Best model ({best_model_name}) saved to: model.pkl")
+
+print("\n✅ All done! Check the generated files:")
+print("   • model.pkl                 — trained best model (ready to load & predict)")
 print("   • comparison_bar_chart.png  — side-by-side metric bars")
 print("   • roc_curves.png            — ROC curves for all models")
 print("   • confusion_matrices.png    — confusion matrices (top 3)")
